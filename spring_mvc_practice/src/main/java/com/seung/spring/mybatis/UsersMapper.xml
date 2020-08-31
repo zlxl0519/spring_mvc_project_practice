@@ -6,4 +6,9 @@
 		from users
 		where id=#{inputId}
 	</select>
+	<insert id="insert" parameterType="usersDto">
+		insert into users
+		(id, pwd, email, regdate)
+		values (#{id}, #{pwd}, #{email}, sysdate)
+	</insert>
 </mapper>
