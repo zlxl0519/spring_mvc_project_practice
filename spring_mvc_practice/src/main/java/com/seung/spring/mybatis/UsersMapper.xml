@@ -11,4 +11,9 @@
 		(id, pwd, email, regdate)
 		values (#{id}, #{pwd}, #{email}, sysdate)
 	</insert>
+	<select id="getData" parameterType="string" resultType="usersDto">
+		select id , pwd, email, profile, to_char(regdate, 'yy.mm.dd hh24"시"mm"분"')as regdate
+		from users
+		where id=#{id}
+	</select>
 </mapper>
