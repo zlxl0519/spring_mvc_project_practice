@@ -70,5 +70,11 @@ public class UsersController {
 		session.invalidate();
 		return "redirect:/home.do";
 	}
-	
+	@RequestMapping("/users/private/info")
+	public ModelAndView info(ModelAndView mView, HttpServletRequest request) {
+		//service 에서 아이디로 정보 가져와서 mView 에 저장하는 로직 
+		usersService.getInfo(request.getSession(), mView);
+		mView.setViewName("users/info");
+		return mView;
+	}
 }

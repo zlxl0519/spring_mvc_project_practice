@@ -3,6 +3,7 @@ package com.seung.spring.users.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +56,13 @@ public class UsersServiceImpl implements UsersService{
 		}else {
 			mView.addObject("isSuccess", false);
 		}
+	}
+
+	@Override
+	public void getInfo(HttpSession session, ModelAndView mView) {
+		//아이디로 정보 가져오기 dao
+		String id=(String)session.getAttribute("id");
+		UsersDto dto=usersDao.getData(id);
+		mView.addObject("dto", dto);
 	}
 }
