@@ -55,7 +55,7 @@
 			</tr>
 		</tbody>
 	</table>
-	<a href="${pageContext.request.contextPath }/users/updateform.do">개인정보 수정</a>
+	<a href="${pageContext.request.contextPath }/users/private/updateform.do">개인정보 수정</a>
 	<a href="javascript:deleteConfirm()">탈퇴</a>
 </div>
 <script>

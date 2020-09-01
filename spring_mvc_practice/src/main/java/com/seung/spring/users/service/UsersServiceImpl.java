@@ -1,5 +1,7 @@
 package com.seung.spring.users.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.seung.spring.users.dao.UsersDao;
@@ -74,5 +77,39 @@ public class UsersServiceImpl implements UsersService{
 		usersDao.delete(id);
 		//로그아웃 처리 (session이 필요하다)
 		session.invalidate();
+	}
+
+	@Override
+	public Map<String, Object> saveImageFile(HttpServletRequest request, MultipartFile mFile) {
+		//원본 파일명
+		String orgFileName=mFile.getOriginalFilename();
+		
+		//wepapp/ upload 파일 경로
+		String realPath=request.getServletContext().getRealPath("/upload");
+		//저장할 파일의 상세 경로// /upload/
+		String filePath=realPath+File.separator;
+		//디렉토리를 만들 파일 객체 생성
+		File upload=new File(filePath);
+		if(!upload.exists()) {//만일 디렉토리가 존재하지 않으면
+			upload.mkdir(); //디렉토리를 만든다.
+		}
+		//파일명 안겹치도록 저장할 파일명 구성
+		String saveFileName= System.currentTimeMillis()+orgFileName;
+		//업로드 폴더에 파일 저장
+		try {
+			mFile.transferTo(new File(filePath+saveFileName));
+			System.out.println(filePath+saveFileName);
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//Map 에 json 형식을 저장하기
+		Map<String, Object> map=new HashMap<>();
+		map.put("imageSrc", "/upload/"+saveFileName);
+		
+		return map;
 	}
 }

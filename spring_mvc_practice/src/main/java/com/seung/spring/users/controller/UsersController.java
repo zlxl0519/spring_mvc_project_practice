@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.seung.spring.users.dto.UsersDto;
@@ -83,5 +84,20 @@ public class UsersController {
 		usersService.deleteUser(request.getSession());
 		mView.setViewName("users/delete");
 		return mView;
+	}
+	@RequestMapping("/users/private/updateform")
+	public ModelAndView updateFrom(HttpServletRequest request, ModelAndView mView) {
+		usersService.getInfo(request.getSession(), mView);
+		mView.setViewName("users/updateform");
+		return mView;
+	}
+	//ajax 프로필사진 업로드 요청 처리
+	@RequestMapping("/users/private/profile_upload")
+	@ResponseBody
+	public Map<String, Object> profile_upload(HttpServletRequest request, @RequestParam MultipartFile image){
+		//service 에서 upload 폴더에 이미지를 저장하고 map 을 리턴해온다.
+		Map<String, Object> map=usersService.saveImageFile(request, image);
+		//map을 리턴한다.
+		return map;
 	}
 }
