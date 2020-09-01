@@ -120,4 +120,31 @@ public class UsersServiceImpl implements UsersService{
 		//dto 에 담긴정보를 가져가서 dao 에서 유저의 정보를 변경한다.
 		usersDao.updateUser(dto);
 	}
+
+	@Override
+	public void updatePwd(HttpSession session, ModelAndView mView, UsersDto dto) {
+		String id=(String)session.getAttribute("id");
+		dto.setId(id);
+		//아이디에 해당되는 유저 정보 가져오기
+		UsersDto resultDto=usersDao.getData(id);
+		//작업 성공 여부
+		boolean isSuccess=false;
+		//1. 기존 비밀번호 입력한 것과 DB 암호화 비밀번호 비교
+		String inputPwd=dto.getPwd();
+		String encodedPwd=resultDto.getPwd();
+		boolean isValid=BCrypt.checkpw(inputPwd, encodedPwd);
+		//2.만일 일치한다면 DB에 새 비밀번호를 암호화 해서 update, 성공여부
+		if(isValid) {
+			//새 비밀번호를 암호화
+			BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
+			String encodednewPwd=encoder.encode(dto.getNewPwd());
+			//새 비밀번호를 dto 에 다시 담기
+			dto.setNewPwd(encodednewPwd);
+			//DB에 비밀번호 반영하기
+			usersDao.updatePwd(dto);
+			//성공
+			isSuccess=true;
+		}
+		mView.addObject("isSuccess", isSuccess);
+	}
 }

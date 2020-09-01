@@ -18,4 +18,5 @@ public interface UsersService {
 	public void deleteUser(HttpSession session);
 	public Map<String, Object> saveImageFile(HttpServletRequest request, MultipartFile mFile);
 	public void updateUser(HttpSession session, UsersDto dto);
+	public void updatePwd(HttpSession session, ModelAndView mView, UsersDto dto);
 }

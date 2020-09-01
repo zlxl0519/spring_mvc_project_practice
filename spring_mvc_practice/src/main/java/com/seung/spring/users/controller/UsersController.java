@@ -110,4 +110,11 @@ public class UsersController {
 	public String pwdUpdateform() {
 		return "users/pwd_updateform";
 	}
+	@RequestMapping("/users/private/pwd_update")
+	public ModelAndView updatePwd(HttpServletRequest request, ModelAndView mView, UsersDto dto) {
+		//Service에서 암호화된 비밀번호와 기존 비밀번호를 비교해서 맞으면 성공, 아니면 실패를반환
+		usersService.updatePwd(request.getSession(), mView, dto);
+		mView.setViewName("users/pwd_update");
+		return mView;
+	}
 }
