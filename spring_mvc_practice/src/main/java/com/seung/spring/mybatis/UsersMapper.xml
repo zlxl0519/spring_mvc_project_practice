@@ -20,4 +20,9 @@
 		delete from users
 		where id=#{id}
 	</delete>
+	<update id="update" parameterType="usersDto">
+		update users
+		set email=#{email}, profile=#{profile}
+		where id=#{id}
+	</update>
 </mapper>

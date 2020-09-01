@@ -37,6 +37,11 @@ public class UsersDaoImpl implements UsersDao{
 		session.delete("users.delete", id);
 	}
 
+	@Override
+	public void updateUser(UsersDto dto) {
+		session.update("users.update", dto);
+	}
+
 	
 	
 	

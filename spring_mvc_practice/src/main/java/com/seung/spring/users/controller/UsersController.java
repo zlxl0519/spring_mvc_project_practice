@@ -100,4 +100,10 @@ public class UsersController {
 		//map을 리턴한다.
 		return map;
 	}
+	@RequestMapping("/users/private/update")
+	public String update(HttpServletRequest request, UsersDto dto) {
+		//service 에서 session 아이디를 받아서 유저 정보를 업데이트 시킨다.
+		usersService.updateUser(request.getSession(), dto);
+		return "redirect:/users/private/info.do";
+	}
 }

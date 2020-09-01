@@ -112,4 +112,12 @@ public class UsersServiceImpl implements UsersService{
 		
 		return map;
 	}
+
+	@Override
+	public void updateUser(HttpSession session, UsersDto dto) {
+		String id=(String)session.getAttribute("id");
+		dto.setId(id);
+		//dto 에 담긴정보를 가져가서 dao 에서 유저의 정보를 변경한다.
+		usersDao.updateUser(dto);
+	}
 }
