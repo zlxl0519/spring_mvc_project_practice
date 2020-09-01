@@ -106,4 +106,8 @@ public class UsersController {
 		usersService.updateUser(request.getSession(), dto);
 		return "redirect:/users/private/info.do";
 	}
+	@RequestMapping("/users/private/pwd_updateform")
+	public String pwdUpdateform() {
+		return "users/pwd_updateform";
+	}
 }
