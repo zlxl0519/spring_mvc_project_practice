@@ -77,4 +77,11 @@ public class UsersController {
 		mView.setViewName("users/info");
 		return mView;
 	}
+	@RequestMapping("/users/private/delete")
+	public ModelAndView delete(HttpServletRequest request, ModelAndView mView) {
+		//service에서 id 에 맞는 user의 정보를지운다.그리고 로그아웃처리를 한다.
+		usersService.deleteUser(request.getSession());
+		mView.setViewName("users/delete");
+		return mView;
+	}
 }

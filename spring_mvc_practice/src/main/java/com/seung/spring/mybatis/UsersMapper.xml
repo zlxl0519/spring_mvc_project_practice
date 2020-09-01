@@ -16,4 +16,8 @@
 		from users
 		where id=#{id}
 	</select>
+	<delete id="delete" parameterType="string">
+		delete from users
+		where id=#{id}
+	</delete>
 </mapper>
