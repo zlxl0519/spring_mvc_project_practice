@@ -40,6 +40,34 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	<div class="page-display">
+		<ul class="pagenation">
+			<c:if test="${startPageNum ne 1 }">
+				<li class="page-item">
+					<a class="page-link" href="list.do?pageNum=${startPageNum-1 }&condition=${condition }&keyword=${keyword }" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+			</c:if>
+			<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }">
+				<c:choose>
+					<c:when test="">
+						<li class="page-item"><a class="page-link" href=""></a></li>
+					</c:when>
+					<c:otherwise>
+					
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+			<c:if test="${endPageNum lt totalPageNum }">
+				<li class="page-item">
+	      			<a class="page-link" href="list.do?pageNum=${endPageNum+1 }&condition=${condition}&keyword="${keyword }" aria-label="Next">
+	        			<span aria-hidden="true">&raquo;</span>
+	      			</a>
+	    		</li>
+			</c:if>
+		</ul>
+	</div>
 	<%-- hr 태그는 콘텐츠 내용에서 주제가 바뀔 때 사용할 수 있는 수평 가로선을 정의할 때 사용합니다. --%>
 	<hr style="clear:left; margin-top:10px"/>
 	<%-- 갖고 오는 목적이기 때문에 get 방식 , 제출하는 목적이면 post 방식 --%>
