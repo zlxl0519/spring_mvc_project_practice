@@ -71,8 +71,12 @@ public class FileServiceImpl implements FileService{
 		
 		//전체 페이지의 갯수 구하기 //나눈것의 실수를 정수값으로 올림해서 사용한다는뜻 // 실수를 나오게하려면 정수 나누기 실수를 해야되서 나누는건 double로 우선 캐스팅
 		int totalPageCount=
-				(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
-		//시작 페이지 번호 //1,2,3이든 page_display_count 가 5 이면 0 // 정수 정수끼리 나누면 정수이기때문
+				(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);// totalPageCount=총 게시물 수 / 한화면에 나오는 페이지수
+		//시작 페이지 번호 //1,2,3이든 page_display_count 가 5 이면 0
+		/*(4/10)*10+1 = 0.4*10+1 = 4+1 = 5가 되겠지만, 
+		 * 컴퓨터는 (int)(4/10)*10+1 = 0*10+1 = 0+1 = 1이 됩니다. 
+		 * int 와 int 가 연산하면 int, 즉 정수로 계산되고 소수점은 버려집니다.
+		 */ // 정수 정수끼리 나누면 정수이기때문
 		int startPageNum=
 			1+((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT;
 		//끝 페이지 번호
