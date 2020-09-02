@@ -7,10 +7,12 @@ public class UsersDto {
 	private String email;
 	private String profile;
 	private String regdate;
+	private boolean rememberId;
 	
 	public UsersDto() {}
 
-	public UsersDto(String id, String pwd, String newPwd, String email, String profile, String regdate) {
+	public UsersDto(String id, String pwd, String newPwd, String email, String profile, String regdate,
+			boolean rememberId) {
 		super();
 		this.id = id;
 		this.pwd = pwd;
@@ -18,6 +20,7 @@ public class UsersDto {
 		this.email = email;
 		this.profile = profile;
 		this.regdate = regdate;
+		this.rememberId = rememberId;
 	}
 
 	public String getId() {
@@ -67,4 +70,14 @@ public class UsersDto {
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
+
+	public boolean isRememberId() {
+		return rememberId;
+	}
+
+	public void setRememberId(boolean rememberId) {
+		this.rememberId = rememberId;
+	}
+
+	
 }

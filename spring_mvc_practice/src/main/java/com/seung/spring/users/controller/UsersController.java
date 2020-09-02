@@ -3,7 +3,9 @@ package com.seung.spring.users.controller;
 import java.net.URLEncoder;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,19 +52,31 @@ public class UsersController {
 			String cPath=request.getContextPath();
 			url=cPath+"/home.do";//로그인후 인덱스 페이지로가기
 		}
+		
+		String savedId="";
+		Cookie[] cooks=request.getCookies();
+		if(cooks!=null) {
+			for(Cookie tmp:cooks) {
+				String key=tmp.getName();
+				if(key.equals("savedId")) {
+					savedId=tmp.getValue();
+				}
+			}
+		}
+		request.setAttribute("savedId", savedId);
 		request.setAttribute("url", url);
 		return "users/loginform";
 	}
 	@RequestMapping("/users/login")
-	public ModelAndView login(UsersDto dto, HttpServletRequest request, ModelAndView mView, 
+	public ModelAndView login(UsersDto dto, HttpServletResponse response, HttpServletRequest request, ModelAndView mView, 
 			HttpSession session) {
 		String url=request.getParameter("url");
-		String encodedUrl=URLEncoder.encode("url");
+		String encodedUrl=URLEncoder.encode(url);
 		mView.addObject("url",url);
 		mView.addObject("encodedUrl",encodedUrl);
 		
 		//service 에서 로그인 할 아이디 비밀번호에 맞는 정보 찾아오는 비즈니스로직 처리를 한다.
-		usersService.loginProcess(dto, session, mView);
+		usersService.loginProcess(dto, session,response, request, mView);
 		mView.setViewName("users/login");
 		return mView;
 	}
