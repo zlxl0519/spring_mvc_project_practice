@@ -2,11 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="file">
 	<select id="getList" parameterType="fileDto" resultType="fileDto">
-		select num, writer,title, orgFileName, saveFileName, fileSize, regdate 
-		from board_file
+		select *
+		from	
+			(select result1.*, rownum as rnum
+			from	
+				(select num, writer,title, orgFileName, saveFileName, fileSize, regdate 
+				from board_file
+				<choose>
+					<when test="title !=null and orgFileName !=null">
+						where title like '%'||#{title}||'%'
+						or orgFileName like '%'||#{orgFileName}||'%'
+					</when>
+					<when test="title !=null">
+						where title like '%'||#{title}||'%'
+					</when>
+					<when test="writer !=null">
+						where writer like '%'||#{writer}||'%'
+					</when>
+				</choose>
+				order by num desc) result1)
+		where rnum between #{startRowNum} and #{endRowNum}
 	</select>
 	<select id="getCount" parameterType="fileDto" resultType="int">
 		select nvl(max(rownum),0)
 		from board_file
+		<choose>
+			<when test="title !=null and orgFileName !=null">
+				where title like '%'||#{title}||'%'
+				or orgFileName like '%'||#{orgFileName}||'%'
+			</when>
+			<when test="title !=null">
+				where title like '%'||#{title}||'%'
+			</when>
+			<when test="writer !=null">
+				where writer like '%'||#{writer}||'%'
+			</when>
+		</choose>
 	</select>
 </mapper>
