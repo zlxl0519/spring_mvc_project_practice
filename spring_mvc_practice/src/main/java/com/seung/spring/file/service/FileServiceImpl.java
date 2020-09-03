@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.seung.spring.exception.NotDeleteException;
 import com.seung.spring.file.dao.FileDao;
 import com.seung.spring.file.dto.FileDto;
 
@@ -95,6 +96,21 @@ public class FileServiceImpl implements FileService{
 		request.setAttribute("condition", condition);
 		request.setAttribute("keyword", keyword);
 		request.setAttribute("encodedK", encodedK);
+	}
+
+	@Override
+	public void delete(int num, HttpServletRequest request) {
+		//삭제하려는 사람의 아이디와 작성자가 같지 않은데 지우려고 하면 예외 발생시키기
+		//세션영역에서 아이디 가져오기
+		String id=(String)request.getAttribute("id");
+		//글에 대한 작성자의 대한 정보도 가져오기 (dao 이용)
+		FileDto dto=fileDao.getData(num);
+		String writer=dto.getWriter();
+		if(!writer.equals(id)) {
+			throw new NotDeleteException("남이 작성한것 지우지마세요!!");
+		}
+		//번호에 맞는 글을 dao 를 이용해서 삭제한다.
+		fileDao.delete(num);
 	}
 	
 }

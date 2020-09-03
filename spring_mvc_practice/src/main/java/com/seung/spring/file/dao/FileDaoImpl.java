@@ -23,6 +23,17 @@ public class FileDaoImpl implements FileDao{
 		
 		return session.selectOne("file.getCount", dto);
 	}
+
+	@Override
+	public void delete(int num) {
+		session.delete("file.delete", num);
+	}
+
+	@Override
+	public FileDto getData(int num) {
+		
+		return session.selectOne("file.getData", num);
+	}
 	
 	
 }

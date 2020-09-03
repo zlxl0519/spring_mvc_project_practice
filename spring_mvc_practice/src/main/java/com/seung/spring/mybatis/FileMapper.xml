@@ -39,4 +39,13 @@
 			</when>
 		</choose>
 	</select>
+	<delete id="delete" parameterType="int">
+		delete from file
+		where num=#{num}
+	</delete>
+	<select id="getData" parameterType="int" resultType="fileDto">
+		select num,writer,title,orgFileName,saveFileName, fileSize, regdate
+		from board_file
+		where num=#{num}
+	</select>
 </mapper>
