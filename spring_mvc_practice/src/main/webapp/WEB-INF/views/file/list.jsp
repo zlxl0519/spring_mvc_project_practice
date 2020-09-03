@@ -11,6 +11,7 @@
 </head>
 <body>
 <div class="container">
+		<a href="private/upload_form.do">파일 업로드</a>
 	<h1>파일 목록입니다</h1>
 	<table class="table table-hover table-sm">
 		<thead>

@@ -29,4 +29,9 @@ public class FileController {
 		fileService.delete(num, request);
 		return "redirect:/file/list.do";
 	}
+	@RequestMapping("/file/private/upload_form")
+	public String uploadForm() {
+		
+		return "file/upload_form";
+	}
 }
