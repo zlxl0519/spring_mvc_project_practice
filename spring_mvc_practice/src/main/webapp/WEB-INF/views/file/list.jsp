@@ -41,7 +41,7 @@
 		</tbody>
 	</table>
 	<div class="page-display">
-		<ul class="pagenation">
+		<ul class="pagination">
 			<c:if test="${startPageNum ne 1 }">
 				<li class="page-item">
 					<a class="page-link" href="list.do?pageNum=${startPageNum-1 }&condition=${condition }&keyword=${keyword }" aria-label="Previous">
@@ -51,15 +51,15 @@
 			</c:if>
 			<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }">
 				<c:choose>
-					<c:when test="">
-						<li class="page-item"><a class="page-link" href=""></a></li>
+					<c:when test="${i eq pageNum }">
+						<li class="page-item active"><a class="page-link" href="list.do?pageNum=${i }&condition=${condition}&keyword=${keyword }">${i }</a></li>
 					</c:when>
 					<c:otherwise>
-					
+						<li class="page-item"><a class="page-link" href="list.do?pageNum=${i }&condition=${condition}&keyword=${keyword }">${i }</a></li>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
-			<c:if test="${endPageNum lt totalPageNum }">
+			<c:if test="${endPageNum lt totalPageCount }">
 				<li class="page-item">
 	      			<a class="page-link" href="list.do?pageNum=${endPageNum+1 }&condition=${condition}&keyword="${keyword }" aria-label="Next">
 	        			<span aria-hidden="true">&raquo;</span>
