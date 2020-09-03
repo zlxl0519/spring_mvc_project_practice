@@ -1,5 +1,6 @@
 package com.seung.spring.file.service;
 
+import java.io.File;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -109,6 +110,11 @@ public class FileServiceImpl implements FileService{
 		if(!writer.equals(id)) {
 			throw new NotDeleteException("남이 작성한것 지우지마세요!!");
 		}
+		//파일 시스템에서 파일 삭제
+		String saveFileName=dto.getSaveFileName();
+		String path=request.getServletContext().getRealPath("/upload")+
+					File.pathSeparator+saveFileName;
+		new File(path).delete();
 		//번호에 맞는 글을 dao 를 이용해서 삭제한다.
 		fileDao.delete(num);
 	}
