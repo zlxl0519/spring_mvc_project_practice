@@ -40,7 +40,7 @@
 		</choose>
 	</select>
 	<delete id="delete" parameterType="int">
-		delete from file
+		delete from board_file
 		where num=#{num}
 	</delete>
 	<select id="getData" parameterType="int" resultType="fileDto">

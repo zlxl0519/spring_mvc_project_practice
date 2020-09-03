@@ -102,7 +102,7 @@ public class FileServiceImpl implements FileService{
 	public void delete(int num, HttpServletRequest request) {
 		//삭제하려는 사람의 아이디와 작성자가 같지 않은데 지우려고 하면 예외 발생시키기
 		//세션영역에서 아이디 가져오기
-		String id=(String)request.getAttribute("id");
+		String id=(String)request.getSession().getAttribute("id");
 		//글에 대한 작성자의 대한 정보도 가져오기 (dao 이용)
 		FileDto dto=fileDao.getData(num);
 		String writer=dto.getWriter();

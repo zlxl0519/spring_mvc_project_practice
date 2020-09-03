@@ -26,7 +26,7 @@ public class FileController {
 	@RequestMapping("/file/private/delete")
 	public String delete(@RequestParam int num, HttpServletRequest request) {
 		//service 에서 번호에 맞는 글을 삭제한다. 그리고 작성자와 아이디가 다른 사람이 글을 지우려고 하면 예외처리하기
-		
+		fileService.delete(num, request);
 		return "redirect:/file/list.do";
 	}
 }

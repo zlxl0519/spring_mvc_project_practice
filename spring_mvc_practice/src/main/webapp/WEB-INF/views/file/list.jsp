@@ -28,12 +28,12 @@
 					<td>${tmp.num }</td>
 					<td>${tmp.writer }</td>
 					<td>${tmp.title }</td>
-					<td><a href="download.do?${tmp.num }">${tmp.orgFileName }</a></td>
+					<td><a href="download.do?num=${tmp.num }">${tmp.orgFileName }</a></td>
 					<td><fmt:formatNumber value="${tmp.fileSize }" pattern="#,###"/>byte</td>
 					<td>${tmp.regdate }</td>
 					<td>
 						<c:if test="${tmp.writer eq id }">
-							<a href="private/delete.do?${tmp.num }">삭제</a>
+							<a href="private/delete.do?num=${tmp.num }">삭제</a>
 						</c:if>
 					</td>
 				</tr>
