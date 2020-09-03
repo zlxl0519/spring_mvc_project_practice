@@ -111,6 +111,11 @@ public class FileServiceImpl implements FileService{
 			throw new NotDeleteException("남이 작성한것 지우지마세요!!");
 		}
 		//파일 시스템에서 파일 삭제
+		/*
+		 *  1. saveFileName 의 정보를 DB 에서 가져오기
+		 *  2. 파일이 저장되있는 실제 경로 가져오기
+		 *  3. new File(실제경로).delete(); 하기
+		 */
 		String saveFileName=dto.getSaveFileName();
 		String path=request.getServletContext().getRealPath("/upload")+
 					File.pathSeparator+saveFileName;
