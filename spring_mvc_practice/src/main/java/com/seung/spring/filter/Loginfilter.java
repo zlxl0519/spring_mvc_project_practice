@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 //web.xml 에 필터 정의와 필터 맵핑을 어노테이션을 이용해서 할수 있다
-@WebFilter({"/users/private/*"})// 로그인 했을때만 사용할수 있는것을 넣어놓는다.//여러곳에 적용할때는 배열로 적용할수 있다.
+@WebFilter({"/users/private/*","/file/private/*"})// 로그인 했을때만 사용할수 있는것을 넣어놓는다.//여러곳에 적용할때는 배열로 적용할수 있다.
 public class Loginfilter implements Filter{
 
 	@Override

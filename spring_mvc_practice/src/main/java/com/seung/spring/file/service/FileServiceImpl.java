@@ -1,6 +1,7 @@
 package com.seung.spring.file.service;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -8,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.seung.spring.exception.NotDeleteException;
 import com.seung.spring.file.dao.FileDao;
@@ -122,6 +125,46 @@ public class FileServiceImpl implements FileService{
 		new File(path).delete();
 		//번호에 맞는 글을 dao 를 이용해서 삭제한다.
 		fileDao.delete(num);
+	}
+
+	@Override
+	public void saveFile(FileDto dto, ModelAndView mView, HttpServletRequest request) {
+		//업로드된 파일 정보를 가지고 있는 MultipartFile 객체 참조해 오기
+		MultipartFile myFile=dto.getMyFile();
+		//MultipartFile 을 사용해서 파일의 실제 이름, 파일 사이즈 를 구해 준다.
+		String orgFileName=myFile.getOriginalFilename();
+		long fileSize=myFile.getSize();
+		//upload 폴더가 있는 실제 경로를 구한다. // webapp/upload 까지 경로
+		String realPath=request.getServletContext().getRealPath("/upload");
+		// 저장할 파일 상세경로
+		String filePath=realPath+File.separator;
+		//저 경로에 upload 디렉토리를 생성한다.
+		File upload=new File(filePath);
+		if(!upload.exists()) {
+			upload.mkdir();
+		}
+		//저장할 파일명을 만들어 준다.
+		String saveFileName=System.currentTimeMillis()+orgFileName;
+		
+		//upload 폴더에 파일을 저장한다.
+		try {
+			myFile.transferTo(new File(filePath+saveFileName));
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//dto에 업로드 파일의 정보를 담는다.
+		String id=(String)request.getSession().getAttribute("id");
+		dto.setWriter(id);
+		dto.setFileSize(fileSize);
+		dto.setOrgFileName(orgFileName);
+		dto.setSaveFileName(saveFileName);
+		//file정보를 DB에 저장한다.
+		fileDao.insert(dto);
+		mView.addObject("dto", dto);
 	}
 	
 }

@@ -48,4 +48,9 @@
 		from board_file
 		where num=#{num}
 	</select>
+	<insert id="insert" parameterType="fileDto">
+		insert into board_file
+		(num, writer, title, orgFileName, saveFileName, fileSize, regdate)
+		values(board_file_seq.nextval, #{writer},#{title}, #{orgFileName},#{saveFileName},#{fileSize},sysdate)
+	</insert>
 </mapper>

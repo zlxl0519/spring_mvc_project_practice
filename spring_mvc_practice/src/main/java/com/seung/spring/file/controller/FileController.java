@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.seung.spring.file.dto.FileDto;
 import com.seung.spring.file.service.FileService;
 
 @Controller
@@ -33,5 +34,15 @@ public class FileController {
 	public String uploadForm() {
 		
 		return "file/upload_form";
+	}
+	@RequestMapping("/file/private/upload")
+	public ModelAndView upload(FileDto dto, ModelAndView mView, HttpServletRequest request) {
+		//service 에서 fileDto 에 임시 저장해놓은 파일을 가져와서 파일이름, 사이즈, 저장파일명, 작성자를 만들고,
+		//파일은 upload 폴더에 넣어주고,
+		//dto 에 담아서 DB에 넣어준다. 
+		//dto의 값을 저장해서 가져온다.
+		fileService.saveFile(dto, mView, request);
+		mView.setViewName("file/upload");
+		return mView;
 	}
 }

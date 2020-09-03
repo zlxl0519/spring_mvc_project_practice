@@ -9,4 +9,5 @@ public interface FileDao {
 	public int getCount(FileDto dto);
 	public void delete(int num);
 	public FileDto getData(int num);
+	public void insert(FileDto dto);
 }
