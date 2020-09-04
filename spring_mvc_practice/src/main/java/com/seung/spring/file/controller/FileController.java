@@ -45,4 +45,10 @@ public class FileController {
 		mView.setViewName("file/upload");
 		return mView;
 	}
+	@RequestMapping("/rils/private/download")
+	public ModelAndView download(@RequestParam int num, ModelAndView mView) {
+		
+		mView.setViewName("fileDownView");
+		return mView;
+	}
 }
